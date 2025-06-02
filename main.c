@@ -3,10 +3,9 @@
 
 int main(){
     // init
-    FILE *fp = fopen("catalogo.bin", "rb");
-
+    FILE *fp = fopen("catalogo.bin", "r+b");
     if (!fp) {
-        printf("Errore durante la creazione del file");
+        fp = fopen("catalogo.bin", "w+b");
     }
 
     int input;
@@ -20,5 +19,5 @@ int main(){
         switch(input){
             case 1: adminMenu(fp);
         }
-    }while (input != 1 || input != 2);
+    }while (input != 1 && input != 2);
 }

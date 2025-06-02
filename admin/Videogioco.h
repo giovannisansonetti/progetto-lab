@@ -15,4 +15,5 @@ typedef struct {
     char genere[MAX_LEN];
     int numeroRecensioni;
     Recensione_t recensioni[MAX_RECENSIONI];
+    int numeroCopie;
 } Videogioco_t;

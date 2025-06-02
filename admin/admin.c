@@ -14,10 +14,10 @@ void adminMenu(FILE *file){
 
         scanf("%d", &scelta);
         switch(scelta){
-            case 1: inserisciGioco(file);
-            case 2: modificaGioco(file);
-            case 3: cancellaGioco(file);
-            case 4: visualizzaCatalogo(file);
+            case 1: inserisciGioco(file); break;
+            case 2: modificaGioco(file); break;
+            case 3: cancellaGioco(file); break;
+            case 4: visualizzaCatalogo(file); break;
         }
 
     }while(scelta != 5);
