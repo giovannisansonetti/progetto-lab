@@ -1,4 +1,3 @@
-
 #include "visitatore.c"
 
-void visitatoremenu (FILE *file);
+void visitatoremenu(FILE *file);

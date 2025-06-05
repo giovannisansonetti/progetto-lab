@@ -1,5 +1,6 @@
 #define MAX_LEN 100
 #define MAX_RECENSIONI 100
+#pragma once
 
 typedef struct {
     int voto;                    // Obbligatorio

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "admin/admin.h"
+#include "visitatore/visitatore.h"
 
 int main(){
     // init
@@ -11,13 +12,18 @@ int main(){
     int input;
 
     do{
-        printf("Benvenuto, seleziona un'opzione \n");
-        printf("[1] Amministratore\n");
-        printf("[2] Visitatore\n");
+        printf("\n===========================================\n");
+        printf("         MENU PRINCIPALE\n");
+        printf("===========================================\n");
+        printf("  [1] Amministratore\n");
+        printf("  [2] Visitatore\n");
+        printf("-------------------------------------------\n");
+        printf("Scegli un'opzione: ");
         scanf("%d", &input);
 
         switch(input){
             case 1: adminMenu(fp);
+            case 2: visitatoremenu(fp);
         }
     }while (input != 1 && input != 2);
 }

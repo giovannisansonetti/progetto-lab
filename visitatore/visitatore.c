@@ -2,19 +2,23 @@
 #include "gestionevisitatore.h"
 
 void visitatoremenu (FILE *file){
-    
     int scelta;
     
     do{
-        printf("[1] Ricerca il videogioco e inserisci una recensione \n");
-        printf("[2] Ricerca il videogioco e acquistalo \n");
-        printf("[3] Torna  al menu \n");
+        printf("\n===========================================\n");
+        printf("         MENU VISITATORE\n");
+        printf("===========================================\n");
+        printf("  [1] Consulta un videogioco\n");
+        printf("  [2] Scrivi una recensione\n");
+        printf("  [3] Mostra catalogo \n");
+        printf("  [4] Torna al menu \n");
+        printf("-------------------------------------------\n");
+        printf("Scegli un'opzione: ");
+
         scanf("%d", &scelta);
         switch(scelta){
-            case 1: ricercagiocorec(file);break;
-            case 2: ricercagiocoacq(file);break;
-            
+            case 1: ricercaGioco(file); break;
         }
-        
-    }while (scelta!=3);
+
+    }while (scelta!=4);
 }
