@@ -1,1 +1,2 @@
-/*da fare*/
+#include "gestioneRecensioni.c"
+void aggiungiRecensione(FILE *file);

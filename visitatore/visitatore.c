@@ -10,7 +10,7 @@ void visitatoremenu(FILE *file){
         printf("         MENU VISITATORE\n");
         printf("===========================================\n");
         printf("  [1] Ricerca e acquista un videogioco\n");
-        printf("  [2] Scrivi una recensione\n");
+        printf("  [2] Ricerca e scrivi una recensione\n");
         printf("  [3] Mostra catalogo \n");
         printf("  [4] Torna al menu \n");
         printf("-------------------------------------------\n");
