@@ -22,8 +22,8 @@ int main(){
         scanf("%d", &input);
 
         switch(input){
-            case 1: adminMenu(fp);
-            case 2: visitatoremenu(fp);
+            case 1: adminMenu(fp); break;
+            case 2: visitatoremenu(fp); break;
         }
     }while (input != 1 && input != 2);
 }

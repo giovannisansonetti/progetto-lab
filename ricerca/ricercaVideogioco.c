@@ -5,24 +5,32 @@
 
 #define MAX_CHARS 100
 
-void ricercaTitolo(FILE *file){
+int ricercaTitolo(FILE *file){
     Videogioco_t vg;
-    char titoloInput[MAX_CHARS];
     short int trovato = 0;
-
-    printf("Inserisci il titolo del gioco che vuoi ricercare: \n");
-    scanf("%s", titoloInput);
+    long offset;
     rewind(file);
+    
+    char titoloInput[MAX_CHARS];
+
+    printf("Inserisci il titolo del gioco che vuoi cercare: \n");
+    scanf("%s", titoloInput);
 
     while(fread(&vg, sizeof(Videogioco_t), 1, file)){
         if(strstr(vg.titolo, titoloInput)){
             trovato = 1;
+            printf("Matching trovato \n");
+            offset = ftell(file) - sizeof(Videogioco_t); // sottraggo la struttura videogioco perchè dopo l'fread il puntatore si trova al record successivo
             printf("Titolo: %s\nEditore: %s\nSviluppatore: %s\nDescrizione: %s\nAnno di pubblicazione: %d\n" , vg.titolo, vg.editore, vg.sviluppatore, vg.descrizione, vg.annoPubblicazione);
+            break;
         }
     }
     if(trovato == 0){
         printf("Nessun videogioco trovato con quel nome");
+        return -1;
     }
+
+    return offset;
 }
 
 void ricercaSviluppatore(FILE *file){
@@ -80,24 +88,25 @@ void ricercaGenere(FILE *file){
     rewind(file);
 
     while(fread(&vg, sizeof(Videogioco_t), 1, file)){
-        if(strstr(vg.editore, genereInput)){
+        if(strstr(vg.genere, genereInput)){
             trovato = 1;
             printf("%s\n", vg.titolo);
         }
     }
 
     if(trovato == 0){
-        printf("Nessun editore trovato \n"); 
+        printf("Nessun videogioco trovato con quel genere \n"); 
     }
 }
 
 void ricercaAnno(FILE *file){
     Videogioco_t vg;
+
     short int annoInput;
     short int trovato = 0;
 
     printf("Inserisci un anno: \n");
-    scanf("%s", annoInput);
+    scanf("%d", &annoInput);
     printf("************ Ecco i videogiochi che sono usciti nel: %d ************\n", annoInput);
     rewind(file);
 

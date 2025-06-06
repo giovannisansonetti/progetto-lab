@@ -5,6 +5,7 @@
 #include "Videogioco.h"
 #include <stdlib.h>
 #include <string.h>
+#include "../ricerca/ricercaVideogioco.h"
 
 void inserisciGioco(FILE *file){
     
@@ -63,52 +64,40 @@ void inserisciGioco(FILE *file){
 
 void modificaGioco(FILE *file){
     Videogioco_t vg;
-    char titoloInput[MAX_CHARS];
-
-    printf("Inserisci il titolo del gioco che vuoi modificare: \n");
-    scanf("%s", titoloInput);
-
+    
     short int trovato = 0; // sentinella
-    rewind(file);
+    long offset = ricercaTitolo(file);
+    if(offset != -1){
+        printf("Videogioco trovato alla posizione %ld\n", offset);
+        short int scelta = 0;
+        do{
+            printf("Modificare i dati? [1] Si [0] No \n");
+            scanf("%d", &scelta);
+            if(scelta == 1){
+                printf("Modifica il titolo del videogioco: \n");
+                scanf("%s", vg.titolo);
+                printf("Modifica l'editore del videogioco: \n");
+                scanf("%s", vg.editore);
+                printf("Modifica il nome dello sviluppatore videogioco: \n");
+                scanf("%s", vg.sviluppatore);
+                printf("Modifica una breve descrizione del gioco: \n");
+                scanf("%s", vg.descrizione);
+                printf("Modifica l'anno di pubblicazione del videogioco: \n");
+                scanf("%d", &vg.annoPubblicazione);
+                printf("Modifica il genere del videogioco: \n");
+                scanf("%s", vg.genere);
+                printf("Modifica il numero di recensioni che vuoi inserire\n");
+                scanf("%d", &vg.numeroRecensioni);
+                vg.numeroCopie = vg.numeroCopie; // cosi non si auto sovrascrive
 
-    while (fread(&vg, sizeof(Videogioco_t), 1, file) == 1){
-        if(strcmp(titoloInput, vg.titolo) == 0 || strstr(vg.titolo, titoloInput) != NULL){
-            trovato = 1;
-            short int scelta = 0;
+                fseek(file, offset, SEEK_SET);
+                fwrite(&vg, sizeof(vg), 1, file);
+                printf("\n\n Videogioco rimosso!");
+                printf("------------------------------------------------------------\n");
 
-            printf("Videogioco trovato, titolo: %s \n", vg.titolo);
+            }
+        }while(scelta != 0 && scelta != 1);
 
-            do{
-                printf("Modificare i dati? [1] Si [0] No \n");
-                scanf("%d", &scelta);
-                if(scelta == 1){
-
-                    printf("Modifica il titolo del videogioco: \n");
-                    scanf("%s", vg.titolo);
-                    printf("Modifica l'editore del videogioco: \n");
-                    scanf("%s", vg.editore);
-                    printf("Modifica il nome dello sviluppatore videogioco: \n");
-                    scanf("%s", vg.sviluppatore);
-                    printf("Modifica una breve descrizione del gioco: \n");
-                    scanf("%s", vg.descrizione);
-                    printf("Modifica l'anno di pubblicazione del videogioco: \n");
-                    scanf("%d", &vg.annoPubblicazione);
-                    printf("Modifica il genere del videogioco: \n");
-                    scanf("%s", vg.genere);
-                    printf("Modifica il numero di recensioni che vuoi inserire\n");
-                    scanf("%d", &vg.numeroRecensioni);
-                    
-                    // finire la modifica
-
-                }
-            }while(scelta != 0 && scelta != 1);
-
-
-        }
-    }
-
-    if(trovato == 0){
-        printf("Nessun titolo corrispondente ");
     }
 }
 
@@ -116,37 +105,21 @@ void cancellaGioco(FILE *file){
     Videogioco_t vg;
     Videogioco_t vg_reset = {"" ,"" ,"", "", 0, "", 0, 0, 0};
 
-    char titoloInput[MAX_CHARS];
-
-    printf("Inserisci il titolo del gioco che vuoi cancellare: \n");
-    scanf("%s", titoloInput);
-
     short int trovato = 0; // sentinella
-    rewind(file); 
+    long offset = ricercaTitolo(file);
+    int scelta;
 
-    while (fread(&vg, sizeof(Videogioco_t), 1, file) == 1){
-        if(strcmp(titoloInput, vg.titolo) == 0 || strstr(vg.titolo, titoloInput)){
-            trovato = 1;
-            int scelta;
-            printf("Videogioco trovato, titolo: %s \n", vg.titolo);
-            do{
-                printf("Sei sicuro di voler cancellare il videogioco dal catalogo? [1] Si [0] No \n");
-                scanf("%d", &scelta);
-                if(scelta == 1){
-                    vg = vg_reset;
-                    fseek(file, -sizeof(Videogioco_t), SEEK_CUR);
-                    fwrite(&vg, sizeof(vg), 1, file);
-                    printf("Videogioco rimosso! \n");
-                }
-            }while(scelta != 0 && scelta != 1);
-        
-        }else{
-            // ricerca di sottostringhe
-        }
-    }
-
-    if(trovato == 0){
-        printf("Nessun titolo corrispondente ");
+    if(offset != -1){
+        do{
+            printf("Sei sicuro di voler cancellare il videogioco dal catalogo? [1] Si [0] No \n");
+            scanf("%d", &scelta);
+            if(scelta == 1){
+                vg = vg_reset;
+                fseek(file, offset, SEEK_SET);
+                fwrite(&vg, sizeof(vg), 1, file);
+                printf("Videogioco rimosso! \n");
+            }
+        }while(scelta != 0 && scelta != 1);
     }
 }
 
@@ -157,7 +130,7 @@ void visualizzaCatalogo(FILE *file){
     while (fread(&vg, sizeof(Videogioco_t), 1, file) == 1)
 	{
         printf("------------------------------------------------------------------------------------\n");
-        printf("Titolo: %s\nEditore: %s\nSviluppatore: %s\nDescrizione: %s\nAnno di pubblicazione: %d\n" , vg.titolo, vg.editore, vg.sviluppatore, vg.descrizione, vg.annoPubblicazione);
+        printf("Titolo: %s\nEditore: %s\nSviluppatore: %s\nDescrizione: %s\n Editore %s \nAnno di pubblicazione: %d\n" , vg.titolo, vg.editore, vg.sviluppatore, vg.descrizione, vg.editore, vg.annoPubblicazione);
         printf("Recensioni:\n");
 
         for(int i = 0; i < vg.numeroRecensioni; i++){
