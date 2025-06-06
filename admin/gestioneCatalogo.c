@@ -97,7 +97,6 @@ void modificaGioco(FILE *file){
 
             }
         }while(scelta != 0 && scelta != 1);
-
     }
 }
 
@@ -130,8 +129,8 @@ void visualizzaCatalogo(FILE *file){
     while (fread(&vg, sizeof(Videogioco_t), 1, file) == 1)
 	{
         printf("------------------------------------------------------------------------------------\n");
-        printf("Titolo: %s\nEditore: %s\nSviluppatore: %s\nDescrizione: %s\n Editore %s \nAnno di pubblicazione: %d\n" , vg.titolo, vg.editore, vg.sviluppatore, vg.descrizione, vg.editore, vg.annoPubblicazione);
-        printf("Recensioni:\n");
+        printf("Titolo: %s\nEditore: %s\nSviluppatore: %s\nDescrizione: %s\nEditore %s \nAnno di pubblicazione: %d\n" , vg.titolo, vg.editore, vg.sviluppatore, vg.descrizione, vg.editore, vg.annoPubblicazione);
+        printf("Numero recensioni [%d] :\n", vg.numeroRecensioni);
 
         for(int i = 0; i < vg.numeroRecensioni; i++){
             printf("Voto: %d \n", vg.recensioni[i].voto);
