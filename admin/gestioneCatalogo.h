@@ -6,4 +6,3 @@
 void inserisciGioco(FILE *file);
 void modificaGioco(FILE *file);
 void cancellaGioco(FILE *file);
-void visualizzaCatalogo(FILE *file);

@@ -27,10 +27,7 @@ void inserisciGioco(FILE *file){
         printf("Inserisci il genere del videogioco: \n");
         scanf("%s", vg.genere);
 
-        /*printf("Inserisci il numero di recensioni che vuoi inserire\n");
-        scanf("%d", &vg.numeroRecensioni);
-
-        for (int i = 0; i < vg.numeroRecensioni; i++) {
+        /*for (int i = 0; i < vg.numeroRecensioni; i++) {
             do {
                 printf("Voto (0-5): ");
                 scanf("%d", &vg.recensioni[i].voto);
@@ -44,11 +41,13 @@ void inserisciGioco(FILE *file){
                 printf("Descrizione recensione: ");
                 scanf("%s", vg.recensioni[i].descrizione);
             }
-        }
+        }*/
 
+        vg.numeroRecensioni = 0;
         vg.numeroCopie = 0;
-        */ 
-       
+        
+        fseek(file, 0, SEEK_END);
+
         if (fwrite(&vg, sizeof(Videogioco_t), 1, file) != 1) {
             printf("Errore nella scrittura del file!\n");
         } else {
@@ -88,13 +87,13 @@ void modificaGioco(FILE *file){
                 scanf("%d", &vg.annoPubblicazione);
                 printf("Modifica il genere del videogioco: \n");
                 scanf("%s", vg.genere);
-                printf("Modifica il numero di recensioni che vuoi inserire\n");
-                scanf("%d", &vg.numeroRecensioni);
+
                 vg.numeroCopie = vg.numeroCopie; // cosi non si auto sovrascrive
 
                 fseek(file, offset, SEEK_SET);
                 fwrite(&vg, sizeof(vg), 1, file);
-                printf("\n\n Videogioco rimosso!");
+
+                printf("\n\n Videogioco modificato correttamente \n\n");
                 printf("------------------------------------------------------------\n");
 
             }
@@ -122,42 +121,4 @@ void cancellaGioco(FILE *file){
             }
         }while(scelta != 0 && scelta != 1);
     }
-}
-
-void visualizzaCatalogo(FILE *file){
-    Videogioco_t vg;
-
-    rewind(file);
-
-    printf("\n==================== CATALOGO VIDEOGIOCHI ====================\n\n");
-
-    while (fread(&vg, sizeof(Videogioco_t), 1, file) == 1) {
-
-        printf("-----------------------------------------------------------------\n");
-        printf(" GIOCO ");
-        printf("-----------------------------------------------------------------\n");
-        printf(" Titolo:                  %s\n", vg.titolo);
-        printf(" Editore:                 %s\n", vg.editore);
-        printf(" Sviluppatore:            %s\n", vg.sviluppatore);
-        printf(" Anno Pubblicazione:      %d\n", vg.annoPubblicazione);
-        printf(" Copie Vendute:           %d\n", vg.numeroCopie);
-        printf(" Descrizione:             %s\n", vg.descrizione);
-
-        printf("\n Numero di Recensioni: %d\n", vg.numeroRecensioni);
-
-        if (vg.numeroRecensioni == 0) {
-            printf("   Nessuna recensione disponibile.\n");
-
-        } else {
-            for (int i = 0; i < vg.numeroRecensioni; i++) {
-                printf("   -----------------------------------------------------------\n");
-                printf("    Recensione #%d\n", i + 1);
-                printf("    Voto        : %d / 5\n", vg.recensioni[i].voto);
-                printf("    Descrizione : %s\n", vg.recensioni[i].descrizione);
-            }
-        }
-
-        printf("=================================================================\n\n");
-    }
-    system("pause");
 }

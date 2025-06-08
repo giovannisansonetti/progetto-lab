@@ -14,7 +14,6 @@ void aggiungiRecensione(FILE *file){
     }
 
     fseek(file, offset, SEEK_SET);
-
     fread(&vg, sizeof(Videogioco_t), 1, file);
 
     printf("Quante recensioni vuoi inserire? \n");
@@ -38,7 +37,7 @@ void aggiungiRecensione(FILE *file){
 
     vg.numeroRecensioni += recensioni;
  
-    fseek(file, offset, SEEK_SET);
+    fseek(file, offset, SEEK_CUR);
     fwrite(&vg, sizeof(vg), 1, file);
 
     printf("\n\n Recensione inserita! \n\n");

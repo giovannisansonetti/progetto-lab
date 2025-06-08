@@ -6,3 +6,4 @@ void ricercaSviluppatore(FILE *file);
 void ricercaEditore(FILE *file);
 void ricercaGenere(FILE *file);
 void ricercaAnno(FILE *file);
+void visualizzaCatalogo(FILE *file);

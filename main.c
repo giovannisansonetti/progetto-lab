@@ -5,10 +5,12 @@
 int main(){
     // init
     FILE *fp = fopen("catalogo.bin", "r+b");
+
+    
     if (!fp) {
         fp = fopen("catalogo.bin", "w+b");
     }
-
+    
     int input;
 
     do{

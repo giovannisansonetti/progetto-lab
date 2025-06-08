@@ -128,3 +128,36 @@ void ricercaAnno(FILE *file){
     }
     system("pause");
 }
+
+void visualizzaCatalogo(FILE *file){
+    Videogioco_t vg;
+    rewind(file);
+
+    printf("\n==================== CATALOGO VIDEOGIOCHI ====================\n\n");
+
+    while (fread(&vg, sizeof(Videogioco_t), 1, file) == 1) {
+        printf(" Titolo:                  %s\n", vg.titolo);
+        printf(" Editore:                 %s\n", vg.editore);
+        printf(" Sviluppatore:            %s\n", vg.sviluppatore);
+        printf(" Anno Pubblicazione:      %d\n", vg.annoPubblicazione);
+        printf(" Copie Vendute:           %d\n", vg.numeroCopie);
+        printf(" Descrizione:             %s\n", vg.descrizione);
+
+        printf("\n Recensioni:");
+
+        if (vg.numeroRecensioni == 0) {
+            printf(" Nessuna recensione disponibile.\n");
+
+        } else {
+            for (int i = 0; i < vg.numeroRecensioni; i++) {
+                printf("   -----------------------------------------------------------\n");
+                printf("    Recensione #%d\n", i + 1);
+                printf("    Voto        : %d / 5\n", vg.recensioni[i].voto);
+                printf("    Descrizione : %s\n", vg.recensioni[i].descrizione);
+            }
+        }
+
+        printf("=================================================================\n\n");
+    }
+    system("pause");
+}

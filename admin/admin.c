@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "gestioneCatalogo.h"
-#include "..\recensioni\gestioneRecensioni.h"
+#include "..\ricerca\ricercaVideogioco.h"
 
 void adminMenu(FILE *file){
 
@@ -15,8 +15,7 @@ void adminMenu(FILE *file){
         printf("[2] Modifica un videogioco \n");
         printf("[3] Cancella un videogioco \n");
         printf("[4] Visualizza il catalogo \n");
-        printf("[5] Aggiungi una recensione \n");
-        printf("[6] Torna al menu \n");
+        printf("[5] Torna al menu \n");
         printf("-------------------------------------------\n");
         printf("Scegli un'opzione: ");
         scanf("%d", &scelta);
@@ -26,9 +25,8 @@ void adminMenu(FILE *file){
             case 2: modificaGioco(file); break;
             case 3: cancellaGioco(file); break;
             case 4: visualizzaCatalogo(file); break;
-            case 5: aggiungiRecensione(file);
         }
 
-    }while(scelta != 6);
+    }while(scelta != 5);
 }
 

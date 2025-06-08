@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "ricercavideogioco.h": "c",
+        "gestionerecensioni.h": "c"
+    }
+}

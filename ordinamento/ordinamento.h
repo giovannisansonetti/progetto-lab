@@ -3,5 +3,6 @@
 
 #include "ordinamento.c"
 
-Videogioco_t ordinamentoCopie(FILE *file);
-Videogioco_t ordinamentoVoti(FILE *file);
+void ordinamentoCopie(FILE *file);
+void ordinamentoVoti(FILE *file);
+ 
