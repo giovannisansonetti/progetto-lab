@@ -4,6 +4,7 @@
 
 void adminMenu(FILE *file){
 
+    system("cls");
     int scelta;
 
     do{

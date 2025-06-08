@@ -46,13 +46,14 @@ void ricercaSviluppatore(FILE *file){
     while(fread(&vg, sizeof(Videogioco_t), 1, file)){
         if(strstr(vg.sviluppatore, sviluppatoreInput)){
             trovato = 1;
-            printf("%s\n", vg.titolo);
+            printf("- %s\n", vg.titolo);
         }
     }
 
     if(trovato == 0){
         printf("Nessun videogioco prodotto da %s \n", sviluppatoreInput);
     }
+    system("pause");
 }
 
 void ricercaEditore(FILE *file){
@@ -68,13 +69,16 @@ void ricercaEditore(FILE *file){
     while(fread(&vg, sizeof(Videogioco_t), 1, file)){
         if(strstr(vg.editore, editoreInput)){
             trovato = 1;
-            printf("%s\n", vg.titolo);
+            printf("- %s\n", vg.titolo);
         }
     }
 
     if(trovato == 0){
         printf("Nessun editore trovato \n"); 
     }
+
+    system("pause");
+
 }
 
 void ricercaGenere(FILE *file){
@@ -84,19 +88,21 @@ void ricercaGenere(FILE *file){
 
     printf("Inserisci un genere da cercare: \n");
     scanf("%s", genereInput);
-    printf("************ Ecco i videogiochi con il genere cercato ************");
+    printf("************ Ecco i videogiochi con il genere cercato ************ \n");
     rewind(file);
 
     while(fread(&vg, sizeof(Videogioco_t), 1, file)){
         if(strstr(vg.genere, genereInput)){
             trovato = 1;
-            printf("%s\n", vg.titolo);
+            printf("- %s \n", vg.titolo);
         }
     }
 
     if(trovato == 0){
         printf("Nessun videogioco trovato con quel genere \n"); 
     }
+    system("pause");
+
 }
 
 void ricercaAnno(FILE *file){
@@ -107,17 +113,18 @@ void ricercaAnno(FILE *file){
 
     printf("Inserisci un anno: \n");
     scanf("%d", &annoInput);
-    printf("************ Ecco i videogiochi che sono usciti nel: %d ************\n", annoInput);
+    printf("************ Ecco i videogiochi che sono usciti nel %d ************\n", annoInput);
     rewind(file);
 
     while(fread(&vg, sizeof(Videogioco_t), 1, file)){
         if(vg.annoPubblicazione == annoInput){
             trovato = 1;
-            printf("%s\n", vg.titolo);
+            printf("- %s\n", vg.titolo);
         }
     }
 
     if(trovato == 0){
         printf("Nessun gioco prodotto nell'anno %d \n", annoInput); 
     }
+    system("pause");
 }

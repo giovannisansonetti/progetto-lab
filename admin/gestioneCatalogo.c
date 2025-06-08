@@ -26,7 +26,8 @@ void inserisciGioco(FILE *file){
         scanf("%d", &vg.annoPubblicazione);
         printf("Inserisci il genere del videogioco: \n");
         scanf("%s", vg.genere);
-        printf("Inserisci il numero di recensioni che vuoi inserire\n");
+
+        /*printf("Inserisci il numero di recensioni che vuoi inserire\n");
         scanf("%d", &vg.numeroRecensioni);
 
         for (int i = 0; i < vg.numeroRecensioni; i++) {
@@ -46,7 +47,8 @@ void inserisciGioco(FILE *file){
         }
 
         vg.numeroCopie = 0;
-        
+        */ 
+       
         if (fwrite(&vg, sizeof(Videogioco_t), 1, file) != 1) {
             printf("Errore nella scrittura del file!\n");
         } else {
@@ -124,23 +126,38 @@ void cancellaGioco(FILE *file){
 
 void visualizzaCatalogo(FILE *file){
     Videogioco_t vg;
-    rewind(file);
-    printf("***************** Ecco il catalogo dei videogiochi presenti *****************\n");
-    while (fread(&vg, sizeof(Videogioco_t), 1, file) == 1)
-	{
-        printf("------------------------------------------------------------------------------------\n");
-        printf("Titolo: %s\nEditore: %s\nSviluppatore: %s\nDescrizione: %s\nEditore %s \nAnno di pubblicazione: %d\n" , vg.titolo, vg.editore, vg.sviluppatore, vg.descrizione, vg.editore, vg.annoPubblicazione);
-        printf("Numero recensioni [%d] :\n", vg.numeroRecensioni);
 
-        for(int i = 0; i < vg.numeroRecensioni; i++){
-            printf("Voto: %d \n", vg.recensioni[i].voto);
-            printf("Descrizione: %s\n", vg.recensioni[i].descrizione);
+    rewind(file);
+
+    printf("\n==================== CATALOGO VIDEOGIOCHI ====================\n\n");
+
+    while (fread(&vg, sizeof(Videogioco_t), 1, file) == 1) {
+
+        printf("-----------------------------------------------------------------\n");
+        printf(" GIOCO ");
+        printf("-----------------------------------------------------------------\n");
+        printf(" Titolo:                  %s\n", vg.titolo);
+        printf(" Editore:                 %s\n", vg.editore);
+        printf(" Sviluppatore:            %s\n", vg.sviluppatore);
+        printf(" Anno Pubblicazione:      %d\n", vg.annoPubblicazione);
+        printf(" Copie Vendute:           %d\n", vg.numeroCopie);
+        printf(" Descrizione:             %s\n", vg.descrizione);
+
+        printf("\n Numero di Recensioni: %d\n", vg.numeroRecensioni);
+
+        if (vg.numeroRecensioni == 0) {
+            printf("   Nessuna recensione disponibile.\n");
+
+        } else {
+            for (int i = 0; i < vg.numeroRecensioni; i++) {
+                printf("   -----------------------------------------------------------\n");
+                printf("    Recensione #%d\n", i + 1);
+                printf("    Voto        : %d / 5\n", vg.recensioni[i].voto);
+                printf("    Descrizione : %s\n", vg.recensioni[i].descrizione);
+            }
         }
 
-        printf("Il gioco è stato acquistato [%d] volte \n", vg.numeroCopie);
-	}
-
-    system("pause"); // permette di visualizzare il catalogo senza ritornare al menu 
-
-    // bisogna implementare l'ordinamento in ordine di giudizio medio o di copie vendute
+        printf("=================================================================\n\n");
+    }
+    system("pause");
 }
