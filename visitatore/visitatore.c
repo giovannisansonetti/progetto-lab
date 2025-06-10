@@ -3,8 +3,6 @@
 #include "..\ricerca\ricercaVideogioco.h"
 #include "..\recensioni\gestioneRecensioni.h"
 
-
-
 void visitatoremenu(FILE *file){
     int scelta;
     system("cls");
@@ -26,11 +24,10 @@ void visitatoremenu(FILE *file){
         
         switch(scelta){
             case 1: acquista(file); break;
-            case 2: aggiungiRecensione(file); break;
+            case 2: gestioneRecensioni(file); break;
             case 3: ricercaGioco(file); break;
             case 4: visualizzaCatalogo(file); break;
             case 5: ordinamentoScelta(file); break;
-            case 6: modificaRecensione(file); break;
             default: break;
         }
 
