@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdbool.h>
+
 #include "admin/admin.h"
 #include "visitatore/visitatore.h"
 
@@ -27,5 +29,5 @@ int main(){
             case 1: adminMenu(fp); break;
             case 2: visitatoremenu(fp); break;
         }
-    }while (input != 1 && input != 2);
+    }while (true);
 }

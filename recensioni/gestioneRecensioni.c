@@ -2,45 +2,71 @@
 #include "..\ricerca\ricercaVideogioco.h"
 #include "..\admin\videogioco.h"
 
+
+// bisogna trasformarle in una funzione singola
+
 void aggiungiRecensione(FILE *file){
 
     Videogioco_t vg;
-    int recensioni;
     short int scelta;
     long offset = ricercaTitolo(file);
 
     if(offset != -1){
-        printf("Videogioco trovato alla posizione %ld\n", offset);
+        printf("Videogioco trovato alla posizione %ld\n", offset); 
+        fseek(file, offset, SEEK_SET);
+        fread(&vg, sizeof(Videogioco_t), 1, file);
+
+        do{
+            printf("Inserisci un voto (0-5) \n");
+            scanf("%d", &vg.recensioni[vg.numeroRecensioni].voto);
+        }while (vg.recensioni[vg.numeroRecensioni].voto > 5 || vg.recensioni[vg.numeroRecensioni].voto < 0);
+
+        printf("Inserisci una descrizione: \n");
+        scanf("%s", vg.recensioni[vg.numeroRecensioni].descrizione);
+        
+        vg.numeroRecensioni++;
+
+        fseek(file, offset, SEEK_SET);
+        fwrite(&vg, sizeof(vg), 1, file);
+
+        printf("\n\n Recensione inserita! \n\n");
+        printf("------------------------------------------------------------\n");
+    }
+
+}
+
+// problema: va ad alterare il nome e lo rende vuoto
+
+void modificaRecensione(FILE *file){
+
+    Videogioco_t vg;
+    short int scelta;
+
+    long offset = ricercaTitolo(file);
+
+    if(offset != -1){
+        printf("Videogioco trovato alla posizione %ld\n", offset); // debug
     }
 
     fseek(file, offset, SEEK_SET);
+
     fread(&vg, sizeof(Videogioco_t), 1, file);
 
-    printf("Quante recensioni vuoi inserire? \n");
-    scanf("%d", &recensioni);
-  
-    for (int i = 0; i < recensioni; i++) {
-        do {
-            printf("Voto (0-5): ");
-            scanf("%d", &vg.recensioni[i].voto);
-            
-        } while (vg.recensioni[i].voto < 0 || vg.recensioni[i].voto > 5);
-        
-        printf("Vuoi inserire una descrizione a questa recensione? [1] Si | [0] No: ");
-        scanf("%d", &scelta);
+    printf("Quale recensione vuoi modificare? \n");
+    scanf("%d", &scelta);
 
-        if (scelta == 1) {
-            printf("Descrizione recensione: ");
-            scanf("%s", vg.recensioni[i].descrizione);
-        }
-    }   
+    do{
+        printf("Inserisci un voto (0-5) \n");
+        scanf("%d", &vg.recensioni[scelta].voto);
+    }while (vg.recensioni[scelta].voto > 5 || vg.recensioni[scelta].voto < 0);
 
-    vg.numeroRecensioni += recensioni;
- 
-    fseek(file, offset, SEEK_CUR);
+    printf("Inserisci una descrizione: \n");
+    scanf("%s", vg.recensioni[scelta].descrizione);
+
+
+    fseek(file, offset, SEEK_SET);
     fwrite(&vg, sizeof(vg), 1, file);
 
     printf("\n\n Recensione inserita! \n\n");
     printf("------------------------------------------------------------\n");
-   
 }

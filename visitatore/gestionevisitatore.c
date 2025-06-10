@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../ricerca/ricercaVideogioco.h"
+#include "..\ordinamento\ordinamento.h"
 
 void acquista(FILE *file) {
     Videogioco_t vg;
@@ -34,8 +35,6 @@ void acquista(FILE *file) {
 
         printf("\n------------------------------------------------------------\n");
 
-    } else {
-        printf("Videogioco non trovato.\n");
     }
 }
 
@@ -66,8 +65,31 @@ void ricercaGioco(FILE *file){
         }
 
     }while (scelta != 6);
-
-
     
 }
 
+void ordinamentoScelta(FILE *file){
+
+    system("cls");
+
+    int scelta;
+
+    do{
+        printf("\n===========================================\n");
+        printf("         CATALOGO ORDINATO\n");
+        printf("===========================================\n");
+        printf("Vuoi visionare il catalogo ordinato per: \n");
+        printf("[1] Voto piu alto \n");
+        printf("[2] Numero di copie vendute \n");
+        printf("-------------------------------------------\n");
+        printf("Scegli un'opzione: ");
+        scanf("%d", &scelta);
+
+        switch (scelta){
+            case 1: ordinamentoVoti(file); break;
+            case 2: ordinamentoCopie(file); break;
+        }
+
+    }while (scelta != 1 && scelta != 2);
+
+}

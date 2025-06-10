@@ -5,9 +5,6 @@
 #define MAX_VIDEOGIOCHI 100
 
 void ordinamentoCopie(FILE *file){
-    // leggere l'intero file e salvare i blocchi in un array temporaneo di tipo Videogioco_t
-    // ordinare con il selection sort per l'ordinamento copie
-    // stampare l'array aggiornatoù
 
     rewind(file);
 
@@ -41,8 +38,6 @@ void ordinamentoCopie(FILE *file){
 }
 
 void ordinamentoVoti(FILE *file){
-    // stessa cosa dell'ordinamento copie
-    // ordinare in base alla media dei voti sui singoli videogiochi
     rewind(file);
 
     Videogioco_t vg[MAX_VIDEOGIOCHI];

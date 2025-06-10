@@ -151,7 +151,7 @@ void visualizzaCatalogo(FILE *file){
         } else {
             for (int i = 0; i < vg.numeroRecensioni; i++) {
                 printf("   -----------------------------------------------------------\n");
-                printf("    Recensione #%d\n", i + 1);
+                printf("    Recensione #%d\n", i);
                 printf("    Voto        : %d / 5\n", vg.recensioni[i].voto);
                 printf("    Descrizione : %s\n", vg.recensioni[i].descrizione);
             }

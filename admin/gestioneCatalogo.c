@@ -24,24 +24,9 @@ void inserisciGioco(FILE *file){
         scanf("%s", vg.descrizione);
         printf("Inserisci l'anno di pubblicazione del videogioco: \n");
         scanf("%d", &vg.annoPubblicazione);
+
         printf("Inserisci il genere del videogioco: \n");
         scanf("%s", vg.genere);
-
-        /*for (int i = 0; i < vg.numeroRecensioni; i++) {
-            do {
-                printf("Voto (0-5): ");
-                scanf("%d", &vg.recensioni[i].voto);
-            } while (vg.recensioni[i].voto < 0 || vg.recensioni[i].voto > 5);
-
-            int scelta;
-            
-            printf("Vuoi inserire una descrizione? [1] Si | [0] No: ");
-            scanf("%d", &scelta);
-            if (scelta == 1) {
-                printf("Descrizione recensione: ");
-                scanf("%s", vg.recensioni[i].descrizione);
-            }
-        }*/
 
         vg.numeroRecensioni = 0;
         vg.numeroCopie = 0;
