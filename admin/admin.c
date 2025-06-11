@@ -3,7 +3,6 @@
 #include "..\ricerca\ricercaVideogioco.h"
 #include "..\recensioni\gestioneRecensioni.h"
 
-
 void adminMenu(FILE *file){
     system("cls");
     int scelta;
@@ -17,7 +16,8 @@ void adminMenu(FILE *file){
         printf("[3] Cancella un videogioco \n");
         printf("[4] Ricerca un videogioco (per parametri) \n");
         printf("[5] Visiona le recensioni di un gioco \n");
-        printf("[6] Torna al menu \n");
+        printf("[6] Visiona l'intero catalogo \n");
+        printf("[7] Torna al menu \n");
         printf("-------------------------------------------\n");
         printf("Scegli un'opzione: ");
         scanf("%d", &scelta);
@@ -28,6 +28,7 @@ void adminMenu(FILE *file){
             case 3: cancellaGioco(file); break;
             case 4: ricercaParametri(file); break;
             case 5: visioneRecensioni(file); break;
+            case 6: visualizzaCatalogo(file); break;
         }
     }while(scelta != 6);
 }

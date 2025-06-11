@@ -3,6 +3,7 @@
 
 #include "admin/admin.h"
 #include "visitatore/visitatore.h"
+#include "inizializzazione_catalogo.h"
 
 int main(){
     // init
@@ -11,7 +12,9 @@ int main(){
     if (!fp) {
         fp = fopen("catalogo.bin", "w+b");
     }
-    
+
+    inizializzaCatalogo(fp);
+
     int input;
 
     do{
@@ -30,3 +33,4 @@ int main(){
         }
     }while (true);
 }
+
