@@ -1,4 +1,4 @@
 #include "gestioneRecensioni.c"
 #pragma once
 
-void gestioneRecensioni(FILE *file);
+void visioneRecensioni(FILE *file);

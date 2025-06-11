@@ -21,7 +21,18 @@ int ricercaTitolo(FILE *file){
             trovato = 1;
             printf("Matching trovato \n");
             offset = ftell(file) - sizeof(Videogioco_t); // sottraggo la struttura videogioco perchè dopo l'fread il puntatore si trova al record successivo
-            printf("Titolo: %s\nEditore: %s\nSviluppatore: %s\nDescrizione: %s\nAnno di pubblicazione: %d\n" , vg.titolo, vg.editore, vg.sviluppatore, vg.descrizione, vg.annoPubblicazione);
+            printf(" Titolo:                  %s\n", vg.titolo);
+            printf(" Editore:                 %s\n", vg.editore);
+            printf(" Sviluppatore:            %s\n", vg.sviluppatore);
+            printf(" Anno Pubblicazione:      %d\n", vg.annoPubblicazione);
+            printf(" Copie Vendute:           %d\n", vg.numeroCopie);
+            printf(" Descrizione:             %s\n", vg.descrizione);
+            printf(" Genere/i:                ");
+
+            for(int i = 0; i < vg.numeroGeneri; i++){
+                
+                printf("%s, ", vg.genere[i]);
+            }
             break;
         }
     }
@@ -97,9 +108,8 @@ void ricercaGenere(FILE *file){
             if(strstr(vg.genere[i], genereInput)){
             trovato = 1;
             printf("- %s \n", vg.titolo);
-        }   
+            }   
         }
-        
     }
 
     if(trovato == 0){
@@ -132,38 +142,6 @@ void ricercaAnno(FILE *file){
     system("pause");
 }
 
-void ricercaRecensioni(FILE *file){
-    Videogioco_t vg;
-    short int trovato = 0;
-    long offset;
-    rewind(file);
-    
-    char titoloInput[MAX_CHARS];
-
-    printf("Inserisci il titolo del gioco che vuoi cercare: \n");
-    scanf(" %[^\n]", titoloInput);
-
-    while(fread(&vg, sizeof(Videogioco_t), 1, file)){
-        if(strstr(vg.titolo, titoloInput)){
-            trovato = 1;
-            printf("Matching trovato \n");
-            offset = ftell(file) - sizeof(Videogioco_t); // sottraggo la struttura videogioco perchè dopo l'fread il puntatore si trova al record successivo
-            printf("Titolo: %s\n");
-            for (int i = 0; i < vg.numeroRecensioni; i++) {
-                printf("   -----------------------------------------------------------\n");
-                printf("    Recensione #%d\n", i);
-                printf("    Voto        : %d / 5\n", vg.recensioni[i].voto);
-                printf("    Descrizione : %s\n", vg.recensioni[i].descrizione);
-            }
-            break;
-        }
-    }
-    if(trovato == 0){
-        printf("Nessun videogioco trovato con quel nome \n");
-    }
-}
-
-
 void visualizzaCatalogo(FILE *file){
     Videogioco_t vg;
     rewind(file);
@@ -178,6 +156,7 @@ void visualizzaCatalogo(FILE *file){
         printf(" Copie Vendute:           %d\n", vg.numeroCopie);
         printf(" Descrizione:             %s\n", vg.descrizione);
         printf(" Genere/i:                ");
+
         for(int i = 0; i < vg.numeroGeneri; i++){
             
             printf("%s, ", vg.genere[i]);
