@@ -27,7 +27,6 @@ void adminMenu(FILE *file){
             case 3: cancellaGioco(file); break;
             case 4: ricercaParametri(file); break;
             case 5: visioneRecensioni(file); break;
-            case 8: visualizzaCatalogo(file); break;
         }
     }while(scelta != 6);
 }
