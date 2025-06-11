@@ -31,5 +31,5 @@ void visitatoremenu(FILE *file){
             default: break;
         }
 
-    }while (scelta!=7);
+    }while (scelta!=6);
 }

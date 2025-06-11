@@ -14,7 +14,7 @@ int ricercaTitolo(FILE *file){
     char titoloInput[MAX_CHARS];
 
     printf("Inserisci il titolo del gioco che vuoi cercare: \n");
-    scanf("%s", titoloInput);
+    scanf(" %[^\n]", titoloInput);
 
     while(fread(&vg, sizeof(Videogioco_t), 1, file)){
         if(strstr(vg.titolo, titoloInput)){
@@ -62,7 +62,7 @@ void ricercaEditore(FILE *file){
     short int trovato = 0;
 
     printf("Inserisci un editore da cercare: \n");
-    scanf("%s", editoreInput);
+    scanf("%[^\n] ", editoreInput);
     printf("************ Ecco i videogiochi prodotti dallo sviluppatore: %s ************\n ", editoreInput);
     rewind(file);
 
@@ -87,22 +87,25 @@ void ricercaGenere(FILE *file){
     short int trovato = 0;
 
     printf("Inserisci un genere da cercare: \n");
-    scanf("%s", genereInput);
+    scanf("%[^\n] ", genereInput);
     printf("************ Ecco i videogiochi con il genere cercato ************ \n");
     rewind(file);
 
     while(fread(&vg, sizeof(Videogioco_t), 1, file)){
-        if(strstr(vg.genere, genereInput)){
+
+        for(int i = 0; i < vg.numeroGeneri; i++){
+            if(strstr(vg.genere[i], genereInput)){
             trovato = 1;
             printf("- %s \n", vg.titolo);
+        }   
         }
+        
     }
 
     if(trovato == 0){
         printf("Nessun videogioco trovato con quel genere \n"); 
     }
     system("pause");
-
 }
 
 void ricercaAnno(FILE *file){
@@ -142,6 +145,11 @@ void visualizzaCatalogo(FILE *file){
         printf(" Anno Pubblicazione:      %d\n", vg.annoPubblicazione);
         printf(" Copie Vendute:           %d\n", vg.numeroCopie);
         printf(" Descrizione:             %s\n", vg.descrizione);
+        printf(" Genere/i:                ");
+        for(int i = 0; i < vg.numeroGeneri; i++){
+            
+            printf("%s, ", vg.genere[i]);
+        }
 
         printf("\n Recensioni:");
 
@@ -154,6 +162,7 @@ void visualizzaCatalogo(FILE *file){
                 printf("    Recensione #%d\n", i);
                 printf("    Voto        : %d / 5\n", vg.recensioni[i].voto);
                 printf("    Descrizione : %s\n", vg.recensioni[i].descrizione);
+                // aggiungere la media 
             }
         }
 

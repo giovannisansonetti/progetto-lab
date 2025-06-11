@@ -1,5 +1,7 @@
 #define MAX_LEN 100
 #define MAX_RECENSIONI 100
+#define MAX_GENERI 100
+
 #pragma once
 
 typedef struct {
@@ -13,7 +15,8 @@ typedef struct {
     char sviluppatore[MAX_LEN];
     char descrizione[MAX_LEN];
     int annoPubblicazione;
-    char genere[MAX_LEN];
+    int numeroGeneri;
+    char genere[MAX_GENERI][MAX_LEN];
     int numeroRecensioni;
     Recensione_t recensioni[MAX_RECENSIONI];
     int numeroCopie;

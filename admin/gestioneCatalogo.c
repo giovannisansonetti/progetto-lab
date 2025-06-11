@@ -12,24 +12,32 @@ void inserisciGioco(FILE *file){
     Videogioco_t vg;
 
     short int cont;
+    short int nGeneri;
 
     do{
         printf("Inserisci il titolo del videogioco: \n");
-        scanf("%s", vg.titolo);
+        scanf(" %[^\n]", vg.titolo);
         printf("Inserisci l'editore del videogioco: \n");
-        scanf("%s", vg.editore);
+        scanf(" %[^\n]", vg.editore);
         printf("Inserisci il nome dello sviluppatore videogioco: \n");
-        scanf("%s", vg.sviluppatore);
+        scanf(" %[^\n]", vg.sviluppatore);
         printf("Inserisci una breve descrizione del gioco: \n");
-        scanf("%s", vg.descrizione);
+        scanf(" %[^\n]", vg.descrizione);
         printf("Inserisci l'anno di pubblicazione del videogioco: \n");
-        scanf("%d", &vg.annoPubblicazione);
+        scanf(" %d", &vg.annoPubblicazione);
 
-        printf("Inserisci il genere del videogioco: \n");
-        scanf("%s", vg.genere);
+        printf("Inserisci il numero di generi \n");
+        scanf("%d", &nGeneri);
+
+        for(int i = 0; i < nGeneri; i++){
+            printf("Inserisci il %d genere: ", i+1);
+            scanf("%s", &vg.genere[i]);
+        }
 
         vg.numeroRecensioni = 0;
         vg.numeroCopie = 0;
+
+        vg.numeroGeneri = nGeneri;
         
         fseek(file, 0, SEEK_END);
 
@@ -53,26 +61,35 @@ void modificaGioco(FILE *file){
     
     short int trovato = 0; // sentinella
     long offset = ricercaTitolo(file);
+
+
     if(offset != -1){
         printf("Videogioco trovato alla posizione %ld\n", offset);
         short int scelta = 0;
         do{
             printf("Modificare i dati? [1] Si [0] No \n");
             scanf("%d", &scelta);
+
+            fseek(file, offset, SEEK_SET);
+            fread(&vg, sizeof(Videogioco_t), 1, file);
+
             if(scelta == 1){
                 printf("Modifica il titolo del videogioco: \n");
-                scanf("%s", vg.titolo);
+                scanf(" %[^\n]", vg.titolo);
                 printf("Modifica l'editore del videogioco: \n");
-                scanf("%s", vg.editore);
-                printf("Modifica il nome dello sviluppatore videogioco: \n");
-                scanf("%s", vg.sviluppatore);
-                printf("Modifica una breve descrizione del gioco: \n");
-                scanf("%s", vg.descrizione);
-                printf("Modifica l'anno di pubblicazione del videogioco: \n");
+                scanf(" %[^\n]", vg.editore);
+                printf("Modifica il nome dello sviluppatore: \n");
+                scanf(" %[^\n]", vg.sviluppatore);
+                printf("Modifica la descrizione del gioco: \n");
+                scanf(" %[^\n]", vg.descrizione);
+                printf("Modifica l'anno di pubblicazione: \n");
                 scanf("%d", &vg.annoPubblicazione);
-                printf("Modifica il genere del videogioco: \n");
-                scanf("%s", vg.genere);
 
+                for(int i = 0; i < vg.numeroGeneri; i++){
+                    printf("Modifica il genere numero %d \n", i+1);
+                    scanf("%s", &vg.genere[i]);
+                }
+                
                 vg.numeroCopie = vg.numeroCopie; // cosi non si auto sovrascrive
 
                 fseek(file, offset, SEEK_SET);
@@ -88,7 +105,7 @@ void modificaGioco(FILE *file){
 
 void cancellaGioco(FILE *file){
     Videogioco_t vg;
-    Videogioco_t vg_reset = {"" ,"" ,"", "", 0, "", 0, 0, 0};
+    Videogioco_t vg_reset = {"" ,"" ,"", "", 0, 0, 0, 0, 0};
 
     short int trovato = 0; // sentinella
     long offset = ricercaTitolo(file);

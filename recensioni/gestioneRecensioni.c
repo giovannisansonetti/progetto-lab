@@ -18,6 +18,7 @@ void gestioneRecensioni(FILE *file){
             printf("Vuoi aggiungere o modificare una recensione? \n"); 
             printf("[1] Aggiungi \n"); 
             printf("[2] Modifica \n"); 
+            printf("[3] Esci \n");
 
             scanf("%d", &scelta);
 
@@ -32,7 +33,7 @@ void gestioneRecensioni(FILE *file){
                 }while (vg.recensioni[vg.numeroRecensioni].voto > 5 || vg.recensioni[vg.numeroRecensioni].voto < 0);
 
                 printf("Inserisci una descrizione: \n");
-                scanf("%s", vg.recensioni[vg.numeroRecensioni].descrizione);
+                scanf(" %[^\n]", vg.recensioni[vg.numeroRecensioni].descrizione);
                 
                 vg.numeroRecensioni++;
 
@@ -60,7 +61,7 @@ void gestioneRecensioni(FILE *file){
                 }while (vg.recensioni[modificaRecensione].voto > 5 || vg.recensioni[modificaRecensione].voto < 0);
 
                 printf("Inserisci una descrizione: \n");
-                scanf("%s", vg.recensioni[modificaRecensione].descrizione);
+                scanf(" %[^\n]", vg.recensioni[modificaRecensione].descrizione);
 
 
                 fseek(file, offset, SEEK_SET);
@@ -71,7 +72,7 @@ void gestioneRecensioni(FILE *file){
 
             }
 
-        } while (scelta != 1 && scelta != 2);
+        } while (scelta != 3);
     }
 }
 
