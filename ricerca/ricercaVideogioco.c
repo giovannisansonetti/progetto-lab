@@ -5,7 +5,7 @@
 
 #define MAX_CHARS 100
 
-int ricercaTitolo(FILE *file){
+long ricercaTitolo(FILE *file){
     Videogioco_t vg;
     short int trovato = 0;
     long offset;
