@@ -132,6 +132,38 @@ void ricercaAnno(FILE *file){
     system("pause");
 }
 
+void ricercaRecensioni(FILE *file){
+    Videogioco_t vg;
+    short int trovato = 0;
+    long offset;
+    rewind(file);
+    
+    char titoloInput[MAX_CHARS];
+
+    printf("Inserisci il titolo del gioco che vuoi cercare: \n");
+    scanf(" %[^\n]", titoloInput);
+
+    while(fread(&vg, sizeof(Videogioco_t), 1, file)){
+        if(strstr(vg.titolo, titoloInput)){
+            trovato = 1;
+            printf("Matching trovato \n");
+            offset = ftell(file) - sizeof(Videogioco_t); // sottraggo la struttura videogioco perchè dopo l'fread il puntatore si trova al record successivo
+            printf("Titolo: %s\n");
+            for (int i = 0; i < vg.numeroRecensioni; i++) {
+                printf("   -----------------------------------------------------------\n");
+                printf("    Recensione #%d\n", i);
+                printf("    Voto        : %d / 5\n", vg.recensioni[i].voto);
+                printf("    Descrizione : %s\n", vg.recensioni[i].descrizione);
+            }
+            break;
+        }
+    }
+    if(trovato == 0){
+        printf("Nessun videogioco trovato con quel nome \n");
+    }
+}
+
+
 void visualizzaCatalogo(FILE *file){
     Videogioco_t vg;
     rewind(file);

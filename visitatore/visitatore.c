@@ -14,7 +14,7 @@ void visitatoremenu(FILE *file){
         printf("  [1] Acquista un videogioco\n");
         printf("  [2] Scrivi o modifica una recensione\n");
         printf("  [3] Ricerca un gioco con parametri \n");
-        printf("  [4] Mostra catalogo intero \n");
+        printf("  [4] Ricerca le recensioni di un videogioco \n");
         printf("  [5] Mostra catalogo ordinato \n");
         printf("  [6] Torna al menu \n");
         printf("-------------------------------------------\n");
@@ -26,10 +26,10 @@ void visitatoremenu(FILE *file){
             case 1: acquista(file); break;
             case 2: gestioneRecensioni(file); break;
             case 3: ricercaGioco(file); break;
-            case 4: visualizzaCatalogo(file); break;
+            case 4: ricercaRecensioni(file); break;
             case 5: ordinamentoScelta(file); break;
             default: break;
         }
 
-    }while (scelta!=6);
+    }while (scelta!=7);
 }
