@@ -30,3 +30,7 @@ void ricercaGioco(FILE *file);
  * @param file Puntatore al file binario contenente i dati dei videogiochi.
  */
 void acquista(FILE *file);
+ 
+
+
+ 

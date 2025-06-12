@@ -50,7 +50,7 @@ void visioneRecensioni(FILE *file){
     while(fread(&vg, sizeof(Videogioco_t), 1, file)){
         if(strstr(vg.titolo, titoloInput)){
             trovato = 1;
-            offset = ftell(file) - sizeof(Videogioco_t); // sottraggo la struttura videogioco perchè dopo l'fread il puntatore si trova al record successivo
+            offset = ftell(file) - sizeof(Videogioco_t); // sottraggo la struttura videogioco perchÃ¨ dopo l'fread il puntatore si trova al record successivo
             int voti = 0;
             
             printf("Titolo: %s\n");
@@ -62,12 +62,14 @@ void visioneRecensioni(FILE *file){
                     printf("    Descrizione : %s\n", vg.recensioni[i].descrizione);
                     voti += vg.recensioni[i].voto;
                 }
+
+            
                 float media = (float)voti / vg.numeroRecensioni;
 
                 printf("   -----------------------------------------------------------\n");
                 printf("    Media voti  : %.2f / 5\n", media);
                 break;
-            }
+            }else printf("Non ci sono recensioni per questo gioco\n/");
         }
     }
     if(trovato == 0){
@@ -76,5 +78,3 @@ void visioneRecensioni(FILE *file){
 
     system("pause");
 }
-
-
