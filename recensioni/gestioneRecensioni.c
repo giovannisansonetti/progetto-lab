@@ -2,7 +2,8 @@
 #include "..\ricerca\ricercaVideogioco.h"
 #include "..\admin\videogioco.h"
 
-// aggiungi una recensione
+// aggiungi una recensione ad un videogioco esistente 
+
 void gestioneRecensioni(FILE *file){
 
     Videogioco_t vg;
@@ -33,7 +34,7 @@ void gestioneRecensioni(FILE *file){
     }
 }
 
-//ritorna tutte le recensioni di un gioco cercato
+// stampa tutte le recensioni di un gioco cercato, assieme alla media dei voti
 
 void visioneRecensioni(FILE *file){
     Videogioco_t vg;
@@ -51,20 +52,22 @@ void visioneRecensioni(FILE *file){
             trovato = 1;
             offset = ftell(file) - sizeof(Videogioco_t); // sottraggo la struttura videogioco perchè dopo l'fread il puntatore si trova al record successivo
             int voti = 0;
-
+            
             printf("Titolo: %s\n");
-            for (int i = 0; i < vg.numeroRecensioni; i++) {
-                printf("   -----------------------------------------------------------\n");
-                printf("    Recensione #%d\n", i);
-                printf("    Voto        : %d / 5\n", vg.recensioni[i].voto);
-                printf("    Descrizione : %s\n", vg.recensioni[i].descrizione);
-                voti += vg.recensioni[i].voto;
-            }
-            float media = (float)voti / vg.numeroRecensioni;
+            if(vg.numeroRecensioni > 0){
+                for (int i = 0; i < vg.numeroRecensioni; i++) {
+                    printf("   -----------------------------------------------------------\n");
+                    printf("    Recensione #%d\n", i);
+                    printf("    Voto        : %d / 5\n", vg.recensioni[i].voto);
+                    printf("    Descrizione : %s\n", vg.recensioni[i].descrizione);
+                    voti += vg.recensioni[i].voto;
+                }
+                float media = (float)voti / vg.numeroRecensioni;
 
-            printf("   -----------------------------------------------------------\n");
-            printf("    Media voti  : %f / 5\n", media);
-            break;
+                printf("   -----------------------------------------------------------\n");
+                printf("    Media voti  : %.2f / 5\n", media);
+                break;
+            }
         }
     }
     if(trovato == 0){

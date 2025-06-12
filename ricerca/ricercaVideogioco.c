@@ -5,6 +5,8 @@
 
 #define MAX_CHARS 100
 
+// ricerca un gioco con input il titolo, ritorna un offset (la posizione del blocco contentente il gioco cercato) 
+
 long ricercaTitolo(FILE *file){
     Videogioco_t vg;
     short int trovato = 0;
@@ -44,6 +46,7 @@ long ricercaTitolo(FILE *file){
     return offset;
 }
 
+// stampa la lista di tutti i videogiochi che sono stati prodotti da uno sviluppatore 
 void ricercaSviluppatore(FILE *file){
     Videogioco_t vg;
     char sviluppatoreInput[MAX_CHARS];
@@ -66,6 +69,8 @@ void ricercaSviluppatore(FILE *file){
     }
     system("pause");
 }
+
+// stampa la lista di tutti i videogiochi che sono stati prodotti da un editore 
 
 void ricercaEditore(FILE *file){
     Videogioco_t vg;
@@ -91,6 +96,8 @@ void ricercaEditore(FILE *file){
     system("pause");
 
 }
+
+// stampa la lista di tutti i videogiochi che hanno il genere cercato
 
 void ricercaGenere(FILE *file){
     Videogioco_t vg;
@@ -118,6 +125,9 @@ void ricercaGenere(FILE *file){
     system("pause");
 }
 
+
+// stampa la lista di tutti i videogiochi prodotti nell'anno cercato 
+
 void ricercaAnno(FILE *file){
     Videogioco_t vg;
 
@@ -141,6 +151,9 @@ void ricercaAnno(FILE *file){
     }
     system("pause");
 }
+
+
+// funzione per gli amministratori per visualizzare l'intero catalogo e le recensioni 
 
 void visualizzaCatalogo(FILE *file){
     Videogioco_t vg;

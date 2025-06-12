@@ -1,6 +1,6 @@
 #define MAX_LEN 100
-#define MAX_RECENSIONI 100
-#define MAX_GENERI 100
+#define MAX_RECENSIONI 50
+#define MAX_GENERI 50
 
 #pragma once
 

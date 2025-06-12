@@ -1,10 +1,13 @@
 #define MAX_CHARS 100
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include "../ricerca/ricercaVideogioco.h"
 #include "..\ordinamento\ordinamento.h"
 
+
+// Menu per l'acquisto di un videogioco
 void acquista(FILE *file) {
     Videogioco_t vg;
     short int trovato = 0; 
@@ -13,6 +16,7 @@ void acquista(FILE *file) {
     if (offset != -1) {
         printf("Videogioco trovato alla posizione %ld\n", offset);
 
+        // il puntatore si posiziona sull'offset ritornato da "ricercaTitolo" e legge la struttura esistente
         fseek(file, offset, SEEK_SET);
         fread(&vg, sizeof(Videogioco_t), 1, file);
 
@@ -29,7 +33,7 @@ void acquista(FILE *file) {
             }
         } while (scelta != 1 && scelta != 0);
 
-       
+        // ritorna all'offset iniziale e sovrascrive la struttura con il numero di copie aggiornato
         fseek(file, offset, SEEK_SET);
         fwrite(&vg, sizeof(vg), 1, file);
 
@@ -69,8 +73,8 @@ void ricercaGioco(FILE *file){
 }
 
 void ordinamentoScelta(FILE *file){
-
     system("cls");
+    printf("Funzione ordinamento\n");  // DEBUG
 
     int scelta;
 
@@ -86,10 +90,16 @@ void ordinamentoScelta(FILE *file){
         scanf("%d", &scelta);
 
         switch (scelta){
-            case 1: ordinamentoVoti(file); break;
-            case 2: ordinamentoCopie(file); break;
+            case 1: 
+                ordinamentoVoti(file); 
+                break;
+            case 2: 
+                ordinamentoCopie(file); 
+                break;
+            default:
+                printf("Scelta non valida\n"); 
+                break;
         }
 
     }while (scelta != 1 && scelta != 2);
-
 }

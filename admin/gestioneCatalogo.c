@@ -1,4 +1,4 @@
-#define MAX_VIDEOGIOCHI 100
+#define MAX_VIDEOGIOCHI 40
 #define MAX_CHARS 100 
 
 #include <stdio.h>

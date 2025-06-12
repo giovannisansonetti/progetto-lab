@@ -29,4 +29,3 @@ void ordinamentoCopie(FILE *file);
  * @param file Puntatore al file binario contenente i dati dei videogiochi.
  */
 void ordinamentoVoti(FILE *file);
-

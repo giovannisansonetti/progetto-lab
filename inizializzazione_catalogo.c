@@ -12,7 +12,7 @@ void inizializzaCatalogo(FILE *file) {
     }
 
     Videogioco_t giochi[20] = {
-        {"hades", "supergiant games", "supergiant games", "action roguelike", 2020, 2, {"action", "roguelike"}, 0, {0}, 0},
+        {"hades", "supergiant games", "supergiant games", "action roguelike", 2020, 2, {"action", "roguelike"}, 0, {0}, 5},
         {"celeste", "matt makes games", "matt makes games", "platformer indie", 2018, 1, {"platformer"}, 0, {0}, 0},
         {"among us", "innersloth", "innersloth", "party multiplayer", 2018, 2, {"multiplayer", "social deduction"}, 0, {0}, 0},
         {"hollow knight", "team cherry", "team cherry", "metroidvania", 2017, 2, {"adventure", "metroidvania"}, 0, {0}, 0},

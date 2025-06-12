@@ -11,9 +11,8 @@ int main(){
     
     if (!fp) {
         fp = fopen("catalogo.bin", "w+b");
+        inizializzaCatalogo(fp);
     }
-
-    inizializzaCatalogo(fp);
 
     int input;
 
@@ -32,5 +31,6 @@ int main(){
             case 2: visitatoremenu(fp); break;
         }
     }while (true);
+    
 }
 

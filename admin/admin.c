@@ -30,6 +30,6 @@ void adminMenu(FILE *file){
             case 5: visioneRecensioni(file); break;
             case 6: visualizzaCatalogo(file); break;
         }
-    }while(scelta != 6);
+    }while(scelta != 7);
 }
 
