@@ -8,6 +8,7 @@ void resetFile() {
 }
 
 void setUp(void) {
+    // per fare un test pulito, il file catalogo viene rimosso
     resetFile();
 }
 
@@ -52,7 +53,6 @@ void test_inserisciGioco(void) {
     vg.numeroCopie = 10;
     fseek(fp, 0, SEEK_END);
     fwrite(&vg, sizeof(Videogioco_t), 1, fp);
-    fflush(fp);
 
     // Controllo se la dimensione file è aumentata con i valori in input
     fseek(fp, 0, SEEK_END);
@@ -65,27 +65,26 @@ void test_modificaGioco(void) {
     TEST_ASSERT_NOT_NULL(fp);
 
     Videogioco_t vg;
-    strcpy(vg.titolo, "ModificaTest");
+    strcpy(vg.titolo, "titolo");
     vg.numeroCopie = 5;
+
     fseek(fp, 0, SEEK_SET);
     fwrite(&vg, sizeof(Videogioco_t), 1, fp);
-    fflush(fp);
 
-    // Simulo modifica direttamente nel file (bypassando scanf)
-    long offset = 0;
-    fseek(fp, offset, SEEK_SET);
+    fseek(fp, 0, SEEK_SET);
     fread(&vg, sizeof(Videogioco_t), 1, fp);
-    strcpy(vg.editore, "EditoreModificato");
-    fseek(fp, offset, SEEK_SET);
+
+    strcpy(vg.editore, "editore");
+    fseek(fp, 0, SEEK_SET);
+
     fwrite(&vg, sizeof(Videogioco_t), 1, fp);
-    fflush(fp);
 
     // Rileggo e verifico modifica
-    fseek(fp, offset, SEEK_SET);
+    fseek(fp, 0, SEEK_SET);
     fread(&vg, sizeof(Videogioco_t), 1, fp);
-    TEST_ASSERT_EQUAL_STRING("EditoreModificato", vg.editore);
 
-    fclose(fp);
+    TEST_ASSERT_EQUAL_STRING("editore", vg.editore);
+
 }
 
 void test_cancellaGioco(void) {
@@ -97,7 +96,6 @@ void test_cancellaGioco(void) {
     vg.numeroCopie = 3;
     fseek(fp, 0, SEEK_SET);
     fwrite(&vg, sizeof(Videogioco_t), 1, fp);
-    fflush(fp);
 
     // Cancello scrivendo struttura vuota
     Videogioco_t vg_reset = {0};
@@ -114,9 +112,42 @@ void test_cancellaGioco(void) {
     fclose(fp);
 }
 
+void test_inserisciRecensioni(void) {
+    FILE *fp = fopen("catalogo.bin", "r+b");
+    TEST_ASSERT_NOT_NULL(fp);
+
+    Videogioco_t vg;
+
+    vg.numeroRecensioni = 1;
+    strcpy(vg.recensioni[0].descrizione, "bello");
+    vg.recensioni[0].voto = 5;
+
+    fseek(fp, 0, SEEK_END); // posizioniamo il puntatore alla fine del file
+    long offset = ftell(fp); 
+    fwrite(&vg, sizeof(Videogioco_t), 1, fp);
+
+    fseek(fp, offset, SEEK_SET); // ci riposizioniamo dove avevamo inserito il blocco
+
+    Videogioco_t vg_lettura; // nuova struct che usiamo per la lettura del blocco
+
+    fread(&vg_lettura, sizeof(Videogioco_t), 1, fp); 
+
+    // controlla se il numero recensioni è 1
+    TEST_ASSERT_EQUAL_INT(1, vg_lettura.numeroRecensioni);
+    //controlla se il voto era quello inserito
+    TEST_ASSERT_EQUAL_INT(5, vg_lettura.recensioni[0].voto);
+    // controlla se la descrizione era quella di input
+    TEST_ASSERT_EQUAL_STRING("bello", vg_lettura.recensioni[0].descrizione);
+}
+
+
 int main() {
     UNITY_BEGIN();
     RUN_TEST(test_controlloFile);
     RUN_TEST(test_inizializzaCatalogo);
     RUN_TEST(test_esistenzaOffset);
+    RUN_TEST(test_inserisciGioco);
+    RUN_TEST(test_modificaGioco);
+    RUN_TEST(test_cancellaGioco);
+    RUN_TEST(test_inserisciRecensioni);
 }
